@@ -39,7 +39,8 @@ router.route('/')
             if (err) {
                 return console.error(err);
             } else {
-                res.send(pckg);
+	            res.status(201);
+	            res.send(req.body.name);
             }
         });
     });
