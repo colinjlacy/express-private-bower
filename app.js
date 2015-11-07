@@ -11,6 +11,7 @@ const
 
     routes = require('./routes/index'),
     users = require('./routes/users'),
+    packageRoutes = require('./routes/packages'),
 
     app = express();
 
@@ -37,7 +38,7 @@ app.use(allowCrossDomain);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/api/packages', packages);
+app.use('/api/', packageRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
