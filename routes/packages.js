@@ -29,7 +29,6 @@ router.route('/')
     })
     // Create new package
     .post((req, res, next) => {
-        console.log(req.body);
         mongoose.model('Packages').create({
             name: req.body.name,
             url: req.body.url,
@@ -46,24 +45,24 @@ router.route('/')
     });
 
 // Middleware to ensure any params passed match a DB record
-router.param('id', (req, res, next, id) => {
-    mongoose.model('Packages').findById(id, (err, pckg) => {
+router.param('name', (req, res, next, name) => {
+    mongoose.model('Packages').find({name: name}, err => {
         if(err) {
             res.status(404);
             res.send({
-                message: `${res.status}: Not Found`
+                message: `${res.status}: Not Found!!!`
             });
         } else {
-            req.id = id;
+            req.body.name = name;
             next();
         }
     });
 });
 
-router.route('/:id')
+router.route('/:name')
     // Get an individual package
     .get((req, res) => {
-        mongoose.model('Packages').findById(req.id, (err, pckg) => {
+        mongoose.model('Packages').findOne({name: req.body.name}, (err, pckg) => {
             if (err) {
                 return console.error(err);
             } else {
@@ -73,7 +72,7 @@ router.route('/:id')
     })
     // Update an individual package
     .put((req, res) => {
-        mongoose.model('Packages').findById(req.id, (err, pckg) => {
+        mongoose.model('Packages').findOne({name: req.body.name}, (err, pckg) => {
             if (err) {
                 return console.error(err);
             } else {

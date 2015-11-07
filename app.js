@@ -38,7 +38,7 @@ app.use(allowCrossDomain);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/api/', packageRoutes);
+app.use('/packages/', packageRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
