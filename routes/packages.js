@@ -3,7 +3,8 @@ const
     router = express.Router(),
     mongoose = require('mongoose'), //mongo connection
     bodyParser = require('body-parser'), //parses information from POST
-    methodOverride = require('method-override'); //used to manipulate POST
+    methodOverride = require('method-override'), //used to manipulate POST
+	getPackageDetails = require('../utils/getPackageInfo');
 
 router
     .use(bodyParser.urlencoded({ extended: true }))
@@ -29,20 +30,22 @@ router.route('/')
     })
     // Create new package
     .post((req, res, next) => {
-        mongoose.model('Packages').create({
-            name: req.body.name,
-            url: req.body.url,
-            description: '',
-            author: '',
-            categories: ''
-        }, (err, pckg) => {
-            if (err) {
-                return console.error(err);
-            } else {
-	            res.status(201);
-	            res.send(req.body.name);
-            }
-        });
+		getPackageDetails(req.body.url).then((resolve) => {
+			mongoose.model('Packages').create({
+				name: req.body.name,
+				url: req.body.url,
+				description: resolve.description,
+				authors: resolve.authors,
+				categories: resolve.keywords
+			}, (err, pckg) => {
+				if (err) {
+					return console.error(err);
+				} else {
+					res.status(201);
+					res.send(pckg);
+				}
+			});
+		});
     });
 
 // Middleware to ensure any params passed match a DB record
@@ -77,17 +80,19 @@ router.route('/:name')
             if (err) {
                 return console.error(err);
             } else {
-                pckg.update({
-                    name: req.body.name,
-                    url: req.body.url,
-                    description: '',
-                    author: '',
-                    categories: ''
-                }, (err, data) => {
-                    if (err) {
-                        res.send("There was a problem updating the information to the database: " + err);
-                    }
-                });
+	            getPackageDetails(req.body.url).then((resolve) => {
+		            pckg.update({
+			            name: req.body.name,
+			            url: req.body.url,
+			            description: resolve.description,
+			            authors: resolve.authors,
+			            categories: resolve.keywords
+		            }, (err, data) => {
+			            if (err) {
+				            res.send("There was a problem updating the information to the database: " + err);
+			            }
+		            });
+	            });
             }
         });
     });

@@ -4,7 +4,7 @@ const
         name: String,
         url: String,
         description: String,
-        author: String,
+        authors: Array,
         categories: Array,
         created: {type: Date, default: Date.now},
         downloaded: {type: Number, default: 0}
