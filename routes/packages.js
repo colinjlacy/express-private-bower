@@ -74,7 +74,17 @@ router.route('/:name')
             if (err) {
                 return console.error(err);
             } else {
-                res.send(pckg);
+                if(req.headers['user-agent'].startsWith('node')) {
+                    // increments download count based on the user agent being Node, i.e. Bower (in theory).
+                    // does not take into account cached resolved package URLs
+                    pckg.update({
+                        downloaded: pckg.downloaded + 1
+                    }, () => {
+                        res.send(pckg);
+                    });
+                } else {
+                    res.send(pckg);
+                }
             }
         });
     })
@@ -93,7 +103,7 @@ router.route('/:name')
                         framework: resolve.framework,
 			            authors: resolve.authors,
 			            categories: resolve.keywords
-		            }, (err, data) => {
+		            }, (err) => {
 			            if (err) {
                             res.status(412);
                             res.send("There was a problem updating the information to the database: " + err.message);
