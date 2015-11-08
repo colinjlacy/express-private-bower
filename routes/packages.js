@@ -35,6 +35,7 @@ router.route('/')
 				name: req.body.name,
 				url: req.body.url,
 				description: resolve.description,
+				framework: resolve.framework,
 				authors: resolve.authors,
 				categories: resolve.keywords
 			}, (err, pckg) => {
@@ -85,6 +86,7 @@ router.route('/:name')
 		            pckg.update({
 			            url: req.body.url,
 			            description: resolve.description,
+                        framework: resolve.framework,
 			            authors: resolve.authors,
 			            categories: resolve.keywords
 		            }, (err, data) => {

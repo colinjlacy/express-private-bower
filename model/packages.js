@@ -6,7 +6,7 @@ const
         description: String,
         authors: [String],
         keywords: [String],
-        framework: String,
+        framework: {type: String, index: true},
         created: {type: Date, default: Date.now},
         downloaded: {type: Number, default: 0}
     });
