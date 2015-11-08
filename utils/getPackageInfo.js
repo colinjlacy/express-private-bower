@@ -10,7 +10,7 @@ const
 	fs = require('fs'),
 	path = require('path'),
 
-	tempFolder = path.join(__dirname, '/temp/packageDetails');
+	tempFolder = path.join(__dirname, '../.bow/packageDetails');
 
 String.prototype.format = function format() {
 	const

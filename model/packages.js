@@ -1,11 +1,12 @@
 const
     mongoose = require('mongoose'),
     packagesSchema = new mongoose.Schema({
-        name: String,
-        url: String,
+        name: {type: String, index: true, unique: true},
+        url: {type: String, unique: true},
         description: String,
-        authors: Array,
-        categories: Array,
+        authors: [String],
+        keywords: [String],
+        framework: String,
         created: {type: Date, default: Date.now},
         downloaded: {type: Number, default: 0}
     });

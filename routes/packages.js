@@ -39,8 +39,9 @@ router.route('/')
 				categories: resolve.keywords
 			}, (err, pckg) => {
 				if (err) {
-					return console.error(err);
-				} else {
+                    res.status(412);
+                    res.send(err.message);
+                } else {
 					res.status(201);
 					res.send(pckg);
 				}
@@ -82,7 +83,6 @@ router.route('/:name')
             } else {
 	            getPackageDetails(req.body.url).then((resolve) => {
 		            pckg.update({
-			            name: req.body.name,
 			            url: req.body.url,
 			            description: resolve.description,
 			            authors: resolve.authors,
@@ -95,6 +95,11 @@ router.route('/:name')
 	            });
             }
         });
+    })
+    // Unregister an individual package
+    .delete((req, res) => {
+        res.status(405);
+        res.send('Unregister operations are not supported at this time.');
     });
 
 module.exports = router;
