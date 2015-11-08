@@ -5,6 +5,8 @@
  * in https://github.com/Hacklone/private-bower
  */
 
+'use strict';
+
 const
 	exec = require('child_process').exec,
 	fs = require('fs'),
@@ -40,6 +42,18 @@ function _getRandomString() {
 	return Math.random().toString(36).substring(2);
 }
 
+function _parseOwner(url) {
+	// makes the assumption that the package is stored on either a public
+	// or private GitHub
+	const
+		start = url.indexOf('.com/') + 5,
+		end = url.indexOf('/', start);
+	return {
+		owner: url.slice(start, end),
+		ownerUrl: url.slice(0, end)
+	}
+}
+
 function _removeDirectory(dirPath) {
 	if(!fs.existsSync(dirPath)) {
 		return;
@@ -71,7 +85,13 @@ function getPackageDetails(packageUrl) {
 				const
 					bowerJsonLocation = path.join(gitCloneFolder, 'bower.json'),
 					fileContent = fs.readFileSync(bowerJsonLocation),
-					bowerJson = JSON.parse(fileContent);
+					ownerInfo = _parseOwner(packageUrl);
+
+				let bowerJson = JSON.parse(fileContent);
+
+				for(let prop in ownerInfo) {
+					if(ownerInfo.hasOwnProperty(prop)) bowerJson[prop] = ownerInfo[prop];
+				}
 
 				_removeDirectory(gitCloneFolder);
 

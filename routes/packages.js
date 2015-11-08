@@ -35,6 +35,8 @@ router.route('/')
 				name: req.body.name,
 				url: req.body.url,
 				description: resolve.description,
+				owner: resolve.owner,
+				ownerUrl: resolve.ownerUrl,
 				framework: resolve.framework,
 				authors: resolve.authors,
 				categories: resolve.keywords
@@ -86,12 +88,15 @@ router.route('/:name')
 		            pckg.update({
 			            url: req.body.url,
 			            description: resolve.description,
+                        owner: resolve.owner,
+                        ownerUrl: resolve.ownerUrl,
                         framework: resolve.framework,
 			            authors: resolve.authors,
 			            categories: resolve.keywords
 		            }, (err, data) => {
 			            if (err) {
-				            res.send("There was a problem updating the information to the database: " + err);
+                            res.status(412);
+                            res.send("There was a problem updating the information to the database: " + err.message);
 			            }
 		            });
 	            });

@@ -4,6 +4,8 @@ const
         name: {type: String, index: true, unique: true},
         url: {type: String, unique: true},
         description: String,
+        owner: String,
+        ownerUrl: String,
         authors: [String],
         keywords: [String],
         framework: {type: String, index: true},
