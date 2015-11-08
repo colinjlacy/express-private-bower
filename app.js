@@ -10,7 +10,6 @@ const
     packages = require('./model/packages'),
 
     routes = require('./routes/index'),
-    users = require('./routes/users'),
     packageRoutes = require('./routes/packages'),
 
     app = express();
@@ -35,7 +34,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(allowCrossDomain);
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'webapp')));
 
 app.use('/', routes);
 app.use('/packages/', packageRoutes);

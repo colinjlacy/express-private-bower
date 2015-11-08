@@ -1,0 +1,23 @@
+{
+  "name": "webapp",
+  "homepage": "https://github.com/colinjlacy/express-private-bower",
+  "authors": [
+    "colinjlacy <colin@webcake.co>"
+  ],
+  "description": "The webapp mean to accompany the Private Bower",
+  "main": "index.html",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.7",
+    "angular-ui-router": "ui-router#~0.2.15"
+  }
+}

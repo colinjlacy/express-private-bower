@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="pb">
+<head>
+	<meta charset="UTF-8">
+	<title>Private Bower</title>
+	<link rel="stylesheet" href="assets/css/app.css"/>
+</head>
+<body>
+
+	<h1>Private Bower</h1>
+
+	<nav>
+		<ul>
+			<li>
+				<a ui-sref="home">Home</a>
+			</li>
+			<li>
+				<a ui-sref="packages">Packages</a>
+			</li>
+			<li>
+				<a ui-sref="search">Search</a>
+			</li>
+			<li>
+				<a ui-sref="authors">Authors</a>
+			</li>
+		</ul>
+	</nav>
+
+	<hr/>
+
+	<ui-view></ui-view>
+
+	<!-- Libraries -->
+	<script src="bower_components/angular/angular.min.js"></script>
+	<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+
+	<!-- Application -->
+	<script src="dist/app.app.js"></script>
+
+	<!-- Packages -->
+	<script src="dist/packages/packages.app.js"></script>
+	<script src="dist/packages/packages.controllers.js"></script>
+</body>
+</html>
