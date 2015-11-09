@@ -54,7 +54,7 @@ router.route('/')
 
 // Middleware to ensure any params passed match a DB record
 router.param('name', (req, res, next, name) => {
-    mongoose.model('Packages').find({name: name}, err => {
+    mongoose.model('Packages').findOne({name: name}, err => {
         if(err) {
             res.status(404);
             res.send({
@@ -70,7 +70,10 @@ router.param('name', (req, res, next, name) => {
 router.route('/:name')
     // Get an individual package
     .get((req, res) => {
-        mongoose.model('Packages').findOne({name: req.body.name}, (err, pckg) => {
+        mongoose.model('Packages')
+            .findOne({name: req.body.name})
+            .select('name url')
+            .exec((err, pckg) => {
             if (err) {
                 return console.error(err);
             } else {
@@ -118,5 +121,18 @@ router.route('/:name')
         res.status(405);
         res.send('Unregister operations are not supported at this time.');
     });
+
+router.get('/search/:name', (req, res) => {
+    mongoose.model('Packages')
+        .find({name: new RegExp(req.body.name, "i")})
+        .select('name url')
+        .exec((err, pckgs) => {
+        if (err) {
+            return console.error(err);
+        } else {
+            res.send(pckgs);
+        }
+    });
+});
 
 module.exports = router;
