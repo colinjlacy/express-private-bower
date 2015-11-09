@@ -1,17 +1,13 @@
 angular.module('pb', [
 	'ui.router',
-	'pb.packages'
+	'pb.packages',
+	'pb.search'
 ])
 	.config(function($stateProvider, $urlRouterProvider) {
 		$urlRouterProvider.otherwise('/');
 		$stateProvider
 			.state('root', {
-				url: "/",
-				templateUrl: './src/app.main.html',
-				controller: 'appCtrl',
-				abstract: true
+				url: '/',
+				templateUrl: './src/app.main.html'
 			});
-	})
-	.run(($rootScope) => {
-		$rootScope.$on("$stateChangeError", console.log.bind(console));
 	});

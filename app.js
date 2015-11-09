@@ -11,6 +11,7 @@ const
 
     routes = require('./routes/index'),
     packageRoutes = require('./routes/packages'),
+    apiRoutes = require('./routes/api'),
 
     app = express();
 
@@ -38,6 +39,7 @@ app.use(express.static(path.join(__dirname, 'webapp')));
 
 app.use('/', routes);
 app.use('/packages/', packageRoutes);
+app.use('/api/', apiRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
