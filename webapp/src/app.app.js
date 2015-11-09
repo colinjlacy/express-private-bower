@@ -2,8 +2,8 @@ angular.module('pb', [
 	'ui.router',
 	'pb.packages'
 ])
-	.config(function($stateProvider, $UrlRouterProvider) {
-		$UrlRouterProvider.otherwise('/');
+	.config(function($stateProvider, $urlRouterProvider) {
+		$urlRouterProvider.otherwise('/');
 		$stateProvider
 			.state('root', {
 				url: "/",
